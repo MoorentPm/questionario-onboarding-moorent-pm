@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questionario Onboarding - Moorent Pm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/form.css">
+  <link rel="stylesheet" href="css/steps.css">
+</head>
+<body>
+  <header>
+    <img src="assets/logo-moorent-pm.png" alt="Moorent Pm" class="header-logo">
+    <div class="progress-container">
+      <p id="progress-text" aria-live="polite">Step 1 di 7 — Benvenuto</p>
+      <progress id="form-progress" max="100" value="14" aria-label="Progresso del questionario"></progress>
+    </div>
+  </header>
+
+  <main class="form-container">
+    <section class="form-step active" data-step="0">
+      <div class="welcome-content">
+        <h2>Ciao! Siamo felici di averti qui.</h2>
+        <p class="welcome-intro">In soli <strong>5 minuti</strong> raccoglieremo tutto il necessario per iniziare la collaborazione con Moorent Pm.</p>
+
+        <div class="checklist-container">
+          <h3>Prima di iniziare, assicurati di avere:</h3>
+          <ul class="welcome-checklist">
+            <li>
+              <span class="checklist-icon" aria-hidden="true">✓</span>
+              I tuoi dati personali (nome, cognome, data di nascita, codice fiscale)
+            </li>
+            <li>
+              <span class="checklist-icon" aria-hidden="true">✓</span>
+              I dati dell'immobile (indirizzo, spese condominio, IMU, TARI)
+            </li>
+            <li>
+              <span class="checklist-icon" aria-hidden="true">✓</span>
+              Una foto del tuo documento d'identità (fronte e retro)
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-step" data-step="1">
+      <h2>Dati Personali</h2>
+
+      <div class="field-section">
+        <h3 class="section-title">Dati anagrafici</h3>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome">Nome <span class="required" aria-label="obbligatorio">*</span></label>
+            <input type="text" id="nome" name="nome" placeholder="Mario" required>
+            <span class="field-error" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="cognome">Cognome <span class="required" aria-label="obbligatorio">*</span></label>
+            <input type="text" id="cognome" name="cognome" placeholder="Rossi" required>
+            <span class="field-error" role="alert"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="data-nascita">Data di nascita <span class="required" aria-label="obbligatorio">*</span></label>
+          <input
+            type="date"
+            id="data-nascita"
+            name="data-nascita"
+            required
+            aria-describedby="data-nascita-hint">
+          <span id="data-nascita-hint" class="field-hint">Seleziona la data dal calendario</span>
+          <span class="field-error" role="alert"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="codice-fiscale">Codice fiscale <span class="required" aria-label="obbligatorio">*</span></label>
+          <input
+            type="text"
+            id="codice-fiscale"
+            name="codice-fiscale"
+            maxlength="16"
+            placeholder="RSSMRA80A01H501U"
+            required
+            style="text-transform: uppercase;">
+          <span class="field-error" role="alert"></span>
+        </div>
+      </div>
+
+      <div class="field-section">
+        <h3 class="section-title">Indirizzo di residenza</h3>
+
+        <div class="form-row">
+          <div class="form-group" style="flex: 3;">
+            <label for="via-residenza">Via <span class="required" aria-label="obbligatorio">*</span></label>
+            <input type="text" id="via-residenza" name="via-residenza" placeholder="Via Roma" required>
+            <span class="field-error" role="alert"></span>
+          </div>
+
+          <div class="form-group" style="flex: 1;">
+            <label for="civico-residenza">Civico <span class="required" aria-label="obbligatorio">*</span></label>
+            <input type="text" id="civico-residenza" name="civico-residenza" placeholder="42" required>
+            <span class="field-error" role="alert"></span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cap-residenza">CAP <span class="required" aria-label="obbligatorio">*</span></label>
+            <input
+              type="text"
+              id="cap-residenza"
+              name="cap-residenza"
+              inputmode="numeric"
+              pattern="[0-9]{5}"
+              placeholder="00100"
+              maxlength="5"
+              required>
+            <span class="field-error" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="citta-residenza">Città <span class="required" aria-label="obbligatorio">*</span></label>
+            <input type="text" id="citta-residenza" name="citta-residenza" placeholder="Roma" required>
+            <span class="field-error" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="provincia-residenza">Provincia <span class="required" aria-label="obbligatorio">*</span></label>
+            <input
+              type="text"
+              id="provincia-residenza"
+              name="provincia-residenza"
+              maxlength="2"
+              placeholder="RM"
+              style="text-transform: uppercase;"
+              required>
+            <span class="field-error" role="alert"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-step" data-step="2">
+      <h2>Dati Immobile</h2>
+
+      <div class="field-section">
+        <h3 class="section-title">Indirizzo immobile</h3>
+
+        <div class="form-row">
+          <div class="form-group" style="flex: 3;">
+            <label for="via-immobile">Via <span class="required" aria-label="obbligatorio">*</span></label>
+            <input type="text" id="via-immobile" name="via-immobile" placeholder="Via Roma" required>
+            <span class="field-error" role="alert"></span>
+          </div>
+
+          <div class="form-group" style="flex: 1;">
+            <label for="civico-immobile">Civico <span class="required" aria-label="obbligatorio">*</span></label>
+            <input type="text" id="civico-immobile" name="civico-immobile" placeholder="42" required>
+            <span class="field-error" role="alert"></span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cap-immobile">CAP <span class="required" aria-label="obbligatorio">*</span></label>
+            <input
+              type="text"
+              id="cap-immobile"
+              name="cap-immobile"
+              inputmode="numeric"
+              pattern="[0-9]{5}"
+              placeholder="00100"
+              maxlength="5"
+              required>
+            <span class="field-error" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="citta-immobile">Città <span class="required" aria-label="obbligatorio">*</span></label>
+            <input type="text" id="citta-immobile" name="citta-immobile" placeholder="Roma" required>
+            <span class="field-error" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="provincia-immobile">Provincia <span class="required" aria-label="obbligatorio">*</span></label>
+            <input
+              type="text"
+              id="provincia-immobile"
+              name="provincia-immobile"
+              maxlength="2"
+              placeholder="RM"
+              style="text-transform: uppercase;"
+              required>
+            <span class="field-error" role="alert"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-section">
+        <h3 class="section-title">Spese e imposte</h3>
+
+        <div class="form-group">
+          <label for="spese-condominio">
+            Spese condominio mensili (EUR) <span class="required" aria-label="obbligatorio">*</span>
+            <button
+              type="button"
+              class="info-icon"
+              aria-label="Informazioni su spese condominio">
+              ⓘ
+            </button>
+          </label>
+          <input
+            type="number"
+            id="spese-condominio"
+            name="spese-condominio"
+            step="0.01"
+            min="0"
+            required>
+          <span class="field-hint">Importo mensile delle spese condominiali</span>
+          <span class="field-error" role="alert"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="imu">
+            IMU annuale (EUR) <span class="required" aria-label="obbligatorio">*</span>
+            <button
+              type="button"
+              class="info-icon"
+              aria-label="Informazioni su IMU">
+              ⓘ
+            </button>
+          </label>
+          <input
+            type="number"
+            id="imu"
+            name="imu"
+            step="0.01"
+            min="0"
+            required>
+          <span class="field-hint">L'imposta municipale unica. Controlla il bollettino di pagamento.</span>
+          <span class="field-error" role="alert"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="tari">
+            TARI annuale (EUR) <span class="required" aria-label="obbligatorio">*</span>
+            <button
+              type="button"
+              class="info-icon"
+              aria-label="Informazioni su TARI">
+              ⓘ
+            </button>
+          </label>
+          <input
+            type="number"
+            id="tari"
+            name="tari"
+            step="0.01"
+            min="0"
+            required>
+          <span class="field-hint">Tassa sui rifiuti. Controlla il bollettino del Comune.</span>
+          <span class="field-error" role="alert"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="utenze">Utenze medie mensili (EUR)</label>
+          <input
+            type="number"
+            id="utenze"
+            name="utenze"
+            step="0.01"
+            min="0">
+          <span class="field-hint">Luce, gas, acqua - importo medio mensile</span>
+          <span class="field-error" role="alert"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="altre-spese">Altre spese</label>
+          <textarea
+            id="altre-spese"
+            name="altre-spese"
+            rows="3"
+            placeholder="Descrivi eventuali altre spese..."></textarea>
+          <span class="field-error" role="alert"></span>
+        </div>
+
+        <div class="total-summary" role="status" aria-live="polite">
+          <strong>Totale spese annuali stimato:</strong>
+          <span id="totale-spese" class="total-value">EUR 0,00</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-step" data-step="3">
+      <h2>Documenti</h2>
+      <p class="doc-note">Accettiamo Carta d'Identita o Passaporto</p>
+
+      <div class="upload-zones">
+        <!-- FRONTE upload zone -->
+        <div class="upload-zone" data-upload-target="fronte">
+          <label class="upload-label">FRONTE</label>
+          <input type="file" id="file-fronte" name="documento-fronte" accept="image/jpeg,image/png,application/pdf" hidden>
+          <label for="file-fronte" class="dropzone" id="dropzone-fronte" tabindex="0" role="button" aria-label="Carica documento fronte">
+            <svg class="icon-upload" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <span class="dropzone-text">Trascina qui o clicca per caricare</span>
+            <span class="dropzone-hint">JPG, PNG o PDF</span>
+          </label>
+          <div class="upload-preview" id="preview-fronte">
+            <div class="preview-thumbnail" id="thumb-fronte"></div>
+            <div class="preview-info">
+              <span class="preview-filename" id="filename-fronte"></span>
+              <span class="preview-size" id="filesize-fronte"></span>
+            </div>
+            <button type="button" class="btn-remove" id="remove-fronte" aria-label="Rimuovi documento fronte">Rimuovi</button>
+          </div>
+          <div class="upload-error" id="error-fronte" role="alert" style="display: none;"></div>
+        </div>
+
+        <!-- RETRO upload zone -->
+        <div class="upload-zone" data-upload-target="retro">
+          <label class="upload-label">RETRO</label>
+          <input type="file" id="file-retro" name="documento-retro" accept="image/jpeg,image/png,application/pdf" hidden>
+          <label for="file-retro" class="dropzone" id="dropzone-retro" tabindex="0" role="button" aria-label="Carica documento retro">
+            <svg class="icon-upload" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <span class="dropzone-text">Trascina qui o clicca per caricare</span>
+            <span class="dropzone-hint">JPG, PNG o PDF</span>
+          </label>
+          <div class="upload-preview" id="preview-retro">
+            <div class="preview-thumbnail" id="thumb-retro"></div>
+            <div class="preview-info">
+              <span class="preview-filename" id="filename-retro"></span>
+              <span class="preview-size" id="filesize-retro"></span>
+            </div>
+            <button type="button" class="btn-remove" id="remove-retro" aria-label="Rimuovi documento retro">Rimuovi</button>
+          </div>
+          <div class="upload-error" id="error-retro" role="alert" style="display: none;"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-step" data-step="4">
+      <h2>Come ci hai conosciuto?</h2>
+
+      <div class="field-section">
+        <p class="field-hint">Seleziona un'opzione</p>
+
+        <div class="chip-group" role="radiogroup" aria-label="Come ci hai conosciuto">
+          <input type="radio" id="tracking-passaparola" name="tracking-source" value="Passaparola" class="chip-input" required>
+          <label for="tracking-passaparola" class="chip-label">Passaparola</label>
+
+          <input type="radio" id="tracking-sito" name="tracking-source" value="Sito web" class="chip-input">
+          <label for="tracking-sito" class="chip-label">Sito web</label>
+
+          <input type="radio" id="tracking-instagram" name="tracking-source" value="Instagram" class="chip-input">
+          <label for="tracking-instagram" class="chip-label">Instagram</label>
+
+          <input type="radio" id="tracking-facebook" name="tracking-source" value="Facebook" class="chip-input">
+          <label for="tracking-facebook" class="chip-label">Facebook</label>
+
+          <input type="radio" id="tracking-tiktok" name="tracking-source" value="TikTok" class="chip-input">
+          <label for="tracking-tiktok" class="chip-label">TikTok</label>
+
+          <input type="radio" id="tracking-linkedin" name="tracking-source" value="LinkedIn" class="chip-input">
+          <label for="tracking-linkedin" class="chip-label">LinkedIn</label>
+        </div>
+
+        <div id="referral-field" class="form-group conditional-field" style="display: none;">
+          <label for="referral-name">Chi ti ha presentato?</label>
+          <input type="text" id="referral-name" name="referral-name" placeholder="Nome della persona">
+          <span class="field-hint">Opzionale</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-step" data-step="5">
+      <h2>Riepilogo</h2>
+      <p>Controlla i tuoi dati prima di procedere. Puoi tornare indietro per modificare qualsiasi informazione.</p>
+
+      <div class="review-section">
+        <div class="review-header">
+          <h3>Dati Personali</h3>
+          <button type="button" class="btn-edit" data-edit-step="1" aria-label="Modifica dati personali">
+            Modifica
+          </button>
+        </div>
+        <dl class="review-data">
+          <dt>Nome</dt>
+          <dd id="review-nome">—</dd>
+
+          <dt>Cognome</dt>
+          <dd id="review-cognome">—</dd>
+
+          <dt>Data di nascita</dt>
+          <dd id="review-data-nascita">—</dd>
+
+          <dt>Codice fiscale</dt>
+          <dd id="review-cf">—</dd>
+
+          <dt>Indirizzo di residenza</dt>
+          <dd id="review-indirizzo-residenza">—</dd>
+        </dl>
+      </div>
+
+      <div class="review-section">
+        <div class="review-header">
+          <h3>Dati Immobile</h3>
+          <button type="button" class="btn-edit" data-edit-step="2" aria-label="Modifica dati immobile">
+            Modifica
+          </button>
+        </div>
+        <dl class="review-data">
+          <dt>Indirizzo immobile</dt>
+          <dd id="review-indirizzo-immobile">—</dd>
+
+          <dt>Spese condominio mensili</dt>
+          <dd id="review-spese-condominio">—</dd>
+
+          <dt>IMU annuale</dt>
+          <dd id="review-imu">—</dd>
+
+          <dt>TARI annuale</dt>
+          <dd id="review-tari">—</dd>
+
+          <dt>Utenze medie mensili</dt>
+          <dd id="review-utenze">—</dd>
+
+          <dt>Totale spese annuali</dt>
+          <dd id="review-totale" class="review-highlight">—</dd>
+        </dl>
+      </div>
+
+      <div class="review-section">
+        <div class="review-header">
+          <h3>Documenti</h3>
+          <button type="button" class="btn-edit" data-edit-step="3" aria-label="Modifica documenti">
+            Modifica
+          </button>
+        </div>
+        <dl class="review-data">
+          <dt>Documento fronte</dt>
+          <dd id="review-doc-fronte">
+            <span class="status-badge status-missing">Mancante</span>
+          </dd>
+
+          <dt>Documento retro</dt>
+          <dd id="review-doc-retro">
+            <span class="status-badge status-missing">Mancante</span>
+          </dd>
+        </dl>
+      </div>
+
+      <div class="review-section">
+        <div class="review-header">
+          <h3>Tracking</h3>
+          <button type="button" class="btn-edit" data-edit-step="4" aria-label="Modifica tracking">
+            Modifica
+          </button>
+        </div>
+        <dl class="review-data">
+          <dt>Come ci hai conosciuto</dt>
+          <dd id="review-tracking">—</dd>
+
+          <dt>Chi ti ha presentato</dt>
+          <dd id="review-referral">—</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="form-step" data-step="6">
+      <h2>Privacy & Invio</h2>
+      <p>Ultimo passo: leggi l'informativa privacy e conferma l'invio del questionario.</p>
+
+      <div class="privacy-section">
+        <div class="privacy-notice">
+          <h3>Informativa Privacy</h3>
+          <p>Prima di inviare il questionario, ti chiediamo di leggere l'informativa sul trattamento dei dati personali.</p>
+          <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer" class="btn-privacy-link">
+            Leggi l'informativa privacy
+          </a>
+        </div>
+
+        <div class="consent-container">
+          <label class="checkbox-label" for="privacy-checkbox">
+            <input type="checkbox" id="privacy-checkbox" name="privacy-checkbox">
+            <span class="checkbox-text">
+              Ho letto e accetto
+              <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">l'informativa sulla privacy</a>
+            </span>
+          </label>
+        </div>
+
+        <div class="submit-container">
+          <button type="button" id="submit-btn" class="btn btn-primary btn-submit" disabled>
+            Invia questionario
+          </button>
+          <p class="submit-hint">Cliccando "Invia questionario" confermi che i dati inseriti sono corretti.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="form-navigation" id="form-nav">
+    <button type="button" id="prevBtn" class="btn btn-secondary" aria-label="Torna allo step precedente">Indietro</button>
+    <button type="button" id="nextBtn" class="btn btn-primary" aria-label="Vai allo step successivo">Avanti</button>
+  </div>
+
+  <!-- External libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@marketto/codice-fiscale-utils@2/dist/codice-fiscale-utils.umd.min.js"></script>
+
+  <!-- Application configuration -->
+  <script src="js/config.js"></script>
+
+  <!-- Application modules (load order matters) -->
+  <script src="js/state.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/codice-fiscale.js"></script>
+  <script src="js/address-autocomplete.js"></script>
+  <script src="js/submission.js"></script>
+  <script src="js/step-fields.js"></script>
+  <script src="js/step-documenti.js"></script>
+  <script src="js/step-review.js"></script>
+  <script src="js/step-privacy.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

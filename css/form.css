@@ -1,0 +1,74 @@
+/* Form step transitions — instant for mobile performance */
+.form-step {
+  display: none;
+}
+
+.form-step.active {
+  display: block;
+}
+
+/* Step content typography */
+.form-step h2 {
+  font-size: 1.5rem;
+  margin-bottom: 24px;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.form-step p {
+  color: var(--color-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Padding to prevent content being hidden behind fixed nav on mobile */
+.form-container {
+  padding-bottom: 120px;
+}
+
+/* Desktop: larger headings + compact fields */
+@media (min-width: 768px) {
+  .form-step h2 {
+    font-size: 1.75rem;
+  }
+
+  input,
+  select,
+  textarea {
+    max-width: 400px;
+  }
+}
+
+/* Validation error message styling */
+.field-error {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--color-error);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* Validation warning message styling (non-blocking) */
+.field-warning {
+  display: block;
+  font-size: 0.8125rem;
+  color: #e65100;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* Invalid field border styling */
+.input-error {
+  border-color: var(--color-error) !important;
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.15);
+}
+
+/* Required field asterisk indicator */
+.required {
+  color: var(--color-error);
+  font-weight: 600;
+  margin-left: 2px;
+}

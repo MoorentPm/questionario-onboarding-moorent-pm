@@ -1,0 +1,16 @@
+# Claude Code
+.claude/
+
+# Internal planning workflow (GSD)
+.planning/
+
+# Backend (Google Apps Script) — runs in script.google.com, not on GitHub Pages
+Code.gs
+
+# Windows artifacts
+nul
+Thumbs.db
+desktop.ini
+
+# OS files
+.DS_Store
