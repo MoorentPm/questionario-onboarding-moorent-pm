@@ -15,8 +15,8 @@
   'use strict';
 
   window.CONFIG = {
-    appsScriptUrl: '',  // Your Google Apps Script Web App URL
-    googleMapsApiKey: ''  // Your Google Maps API key (restrict to your domain in Cloud Console)
+    appsScriptUrl: '__APPS_SCRIPT_URL__',
+    googleMapsApiKey: '__GOOGLE_MAPS_API_KEY__'
   };
 
 }());
