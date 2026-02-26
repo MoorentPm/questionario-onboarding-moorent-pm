@@ -15,8 +15,8 @@
   'use strict';
 
   window.CONFIG = {
-    appsScriptUrl: '__APPS_SCRIPT_URL__',
-    googleMapsApiKey: '__GOOGLE_MAPS_API_KEY__'
+    appsScriptUrl: 'https://script.google.com/macros/s/AKfycbzlvj8jjlRkvpBe2h60ST0yGSX_0wvh0GvpJeL8YsRQErmcCIBcp8GWgnUZTX3ICUvv/exec',
+    googleMapsApiKey: 'AIzaSyA3OpTFG4-WupXL659tUlhmFN3HCd9eTGo'
   };
 
 }());
