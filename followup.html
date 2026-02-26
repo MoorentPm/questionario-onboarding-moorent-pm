@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questionario Follow-up - Moorent Pm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/steps.css">
+  <style>
+    .followup-form { max-width: 600px; margin: 0 auto; padding: 24px 16px; }
+    .followup-question { margin-bottom: 32px; }
+    .followup-question legend { font-size: 1rem; font-weight: 500; color: var(--color-primary); margin-bottom: 12px; display: block; }
+    .radio-group { display: flex; flex-wrap: wrap; gap: 8px; }
+    .radio-group label { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 8px 14px; border: 1px solid #333; border-radius: var(--radius); color: var(--color-secondary); font-size: 0.9rem; transition: border-color var(--transition-fast), color var(--transition-fast); }
+    .radio-group input[type="radio"] { accent-color: var(--color-accent); }
+    .radio-group input[type="radio"]:checked + span { color: var(--color-accent); }
+    .radio-group label:has(input:checked) { border-color: var(--color-accent); color: var(--color-accent); }
+    textarea { width: 100%; background: #1e1e1e; border: 1px solid #333; border-radius: var(--radius); color: var(--color-primary); padding: 12px; font-family: var(--font-primary); font-size: 0.95rem; resize: vertical; }
+    textarea:focus { outline: none; border-color: var(--color-accent); }
+    .submit-btn { width: 100%; padding: 14px; background: var(--color-accent); color: #121212; border: none; border-radius: var(--radius); font-size: 1rem; font-weight: 600; cursor: pointer; transition: opacity var(--transition-fast); }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .status-msg { text-align: center; padding: 24px; border-radius: var(--radius); margin-top: 24px; }
+    .status-msg.success { background: #1a3a1a; color: #81c784; border: 1px solid #2e7d32; }
+    .status-msg.error { background: #3a1a1a; color: #ef9a9a; border: 1px solid #c62828; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="assets/logo-moorent-pm-light.png" alt="Moorent Pm" class="header-logo">
+  </header>
+
+  <main class="form-container">
+    <section class="form-step active" data-step="0">
+      <h2>Come sta andando?</h2>
+      <p>Ci vogliono solo 2 minuti. Il tuo feedback ci aiuta a migliorare il servizio.</p>
+
+      <form id="followup-form" class="followup-form" novalidate>
+
+        <!-- Domanda 1: Soddisfazione generale -->
+        <fieldset class="followup-question">
+          <legend>1. Quanto sei soddisfatto del servizio Moorent Pm? <span style="color:var(--color-error);">*</span></legend>
+          <div class="radio-group" role="radiogroup" aria-label="Soddisfazione generale">
+            <label>
+              <input type="radio" name="soddisfazione" value="1" required>
+              <span>1 — Per niente</span>
+            </label>
+            <label>
+              <input type="radio" name="soddisfazione" value="2">
+              <span>2</span>
+            </label>
+            <label>
+              <input type="radio" name="soddisfazione" value="3">
+              <span>3</span>
+            </label>
+            <label>
+              <input type="radio" name="soddisfazione" value="4">
+              <span>4</span>
+            </label>
+            <label>
+              <input type="radio" name="soddisfazione" value="5">
+              <span>5 — Moltissimo</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Domanda 2: Comunicazione -->
+        <fieldset class="followup-question">
+          <legend>2. Come valuti la comunicazione del nostro team? <span style="color:var(--color-error);">*</span></legend>
+          <div class="radio-group" role="radiogroup" aria-label="Comunicazione">
+            <label>
+              <input type="radio" name="comunicazione" value="1" required>
+              <span>1 — Scadente</span>
+            </label>
+            <label>
+              <input type="radio" name="comunicazione" value="2">
+              <span>2</span>
+            </label>
+            <label>
+              <input type="radio" name="comunicazione" value="3">
+              <span>3</span>
+            </label>
+            <label>
+              <input type="radio" name="comunicazione" value="4">
+              <span>4</span>
+            </label>
+            <label>
+              <input type="radio" name="comunicazione" value="5">
+              <span>5 — Eccellente</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Domanda 3: Professionalita -->
+        <fieldset class="followup-question">
+          <legend>3. Come valuti la professionalita del servizio? <span style="color:var(--color-error);">*</span></legend>
+          <div class="radio-group" role="radiogroup" aria-label="Professionalita">
+            <label>
+              <input type="radio" name="professionalita" value="1" required>
+              <span>1 — Scadente</span>
+            </label>
+            <label>
+              <input type="radio" name="professionalita" value="2">
+              <span>2</span>
+            </label>
+            <label>
+              <input type="radio" name="professionalita" value="3">
+              <span>3</span>
+            </label>
+            <label>
+              <input type="radio" name="professionalita" value="4">
+              <span>4</span>
+            </label>
+            <label>
+              <input type="radio" name="professionalita" value="5">
+              <span>5 — Eccellente</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Domanda 4: Consiglieresti -->
+        <fieldset class="followup-question">
+          <legend>4. Consiglieresti Moorent Pm a un amico o collega? <span style="color:var(--color-error);">*</span></legend>
+          <div class="radio-group" role="radiogroup" aria-label="Consiglieresti">
+            <label>
+              <input type="radio" name="consiglieresti" value="si" required>
+              <span>Si</span>
+            </label>
+            <label>
+              <input type="radio" name="consiglieresti" value="forse">
+              <span>Forse</span>
+            </label>
+            <label>
+              <input type="radio" name="consiglieresti" value="no">
+              <span>No</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Domanda 5: Nota libera -->
+        <div class="followup-question">
+          <label for="nota-libera" style="font-size:1rem;font-weight:500;color:var(--color-primary);display:block;margin-bottom:12px;">
+            5. C'e altro che vuoi dirci? (facoltativo)
+          </label>
+          <textarea
+            id="nota-libera"
+            name="notaLibera"
+            rows="4"
+            placeholder="Scrivi qui il tuo commento..."></textarea>
+        </div>
+
+        <button type="submit" id="followup-submit" class="submit-btn">Invia risposta</button>
+      </form>
+
+      <div id="followup-success" class="status-msg success" style="display:none;">
+        Grazie per il tuo feedback! Le tue risposte ci aiuteranno a migliorare il servizio.
+      </div>
+      <div id="followup-error" class="status-msg error" style="display:none;"></div>
+    </section>
+  </main>
+
+  <!-- Application configuration -->
+  <script src="js/config.js"></script>
+
+  <!-- Follow-up form logic -->
+  <script>
+(function() {
+  'use strict';
+
+  // Legge il parametro ?id= dall'URL
+  var params = new URLSearchParams(window.location.search);
+  var submissionId = params.get('id') || '';
+
+  var form = document.getElementById('followup-form');
+  var successMsg = document.getElementById('followup-success');
+  var errorMsg = document.getElementById('followup-error');
+  var submitBtn = document.getElementById('followup-submit');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var formData = new FormData(form);
+    var data = {
+      submissionId:    submissionId,
+      soddisfazione:   formData.get('soddisfazione')   || '',
+      comunicazione:   formData.get('comunicazione')   || '',
+      professionalita: formData.get('professionalita') || '',
+      consiglieresti:  formData.get('consiglieresti')  || '',
+      notaLibera:      formData.get('notaLibera')      || ''
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Invio in corso...';
+
+    fetch(window.CONFIG.appsScriptUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'followup', data: data })
+    })
+      .then(function(res) { return res.json(); })
+      .then(function(result) {
+        if (result.success) {
+          form.style.display = 'none';
+          successMsg.style.display = 'block';
+        } else {
+          errorMsg.textContent = 'Errore durante l\'invio. Riprova piu tardi.';
+          errorMsg.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Invia risposta';
+        }
+      })
+      .catch(function() {
+        errorMsg.textContent = 'Errore di rete. Controlla la connessione e riprova.';
+        errorMsg.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Invia risposta';
+      });
+  });
+
+}());
+  </script>
+</body>
+</html>
