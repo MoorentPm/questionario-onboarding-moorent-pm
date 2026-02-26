@@ -159,6 +159,11 @@
       reviewCf.textContent = step1Data['codice-fiscale'] || '—';
     }
 
+    var reviewEmail = document.getElementById('review-email');
+    if (reviewEmail) {
+      reviewEmail.textContent = step1Data.email || '—';
+    }
+
     var reviewIndirizzoResidenza = document.getElementById('review-indirizzo-residenza');
     if (reviewIndirizzoResidenza) {
       reviewIndirizzoResidenza.textContent = formatAddress(
