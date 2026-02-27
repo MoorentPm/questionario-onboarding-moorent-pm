@@ -10,154 +10,735 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/steps.css">
   <style>
-    .followup-form { max-width: 600px; margin: 0 auto; padding: 24px 16px; }
-    .followup-question { margin-bottom: 32px; }
-    .followup-question legend { font-size: 1rem; font-weight: 500; color: var(--color-primary); margin-bottom: 12px; display: block; }
-    .radio-group { display: flex; flex-wrap: wrap; gap: 8px; }
-    .radio-group label { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 8px 14px; border: 1px solid #333; border-radius: var(--radius); color: var(--color-secondary); font-size: 0.9rem; transition: border-color var(--transition-fast), color var(--transition-fast); }
-    .radio-group input[type="radio"] { accent-color: var(--color-accent); }
-    .radio-group input[type="radio"]:checked + span { color: var(--color-accent); }
-    .radio-group label:has(input:checked) { border-color: var(--color-accent); color: var(--color-accent); }
-    textarea { width: 100%; background: #1e1e1e; border: 1px solid #333; border-radius: var(--radius); color: var(--color-primary); padding: 12px; font-family: var(--font-primary); font-size: 0.95rem; resize: vertical; }
-    textarea:focus { outline: none; border-color: var(--color-accent); }
-    .submit-btn { width: 100%; padding: 14px; background: var(--color-accent); color: #121212; border: none; border-radius: var(--radius); font-size: 1rem; font-weight: 600; cursor: pointer; transition: opacity var(--transition-fast); }
-    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .status-msg { text-align: center; padding: 24px; border-radius: var(--radius); margin-top: 24px; }
-    .status-msg.success { background: #1a3a1a; color: #81c784; border: 1px solid #2e7d32; }
-    .status-msg.error { background: #3a1a1a; color: #ef9a9a; border: 1px solid #c62828; }
+    /* ----------------------------------------------------------------
+       Design tokens (redeclared for self-containment)
+    ---------------------------------------------------------------- */
+    :root {
+      --fu-bg:              #121212;
+      --fu-card:            #1e1e1e;
+      --fu-border:          #333;
+      --fu-primary:         #e8e8e8;
+      --fu-secondary:       #9e9e9e;
+      --fu-accent:          #c4a59e;
+      --fu-radius:          8px;
+      --fu-star-active:     #c4a59e;
+      --fu-star-inactive:   #444;
+      --fu-chip-active-bg:  #c4a59e;
+      --fu-chip-active-color: #121212;
+      --fu-error:           #ef5350;
+      --fu-success-bg:      #1a3a1a;
+      --fu-success-color:   #81c784;
+    }
+
+    /* ----------------------------------------------------------------
+       Base reset for this page
+    ---------------------------------------------------------------- */
+    body {
+      background: var(--fu-bg);
+      color: var(--fu-primary);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ----------------------------------------------------------------
+       Progress bar — sticky top
+    ---------------------------------------------------------------- */
+    #progress-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 4px;
+      background: var(--fu-border);
+    }
+    #progress-fill {
+      height: 4px;
+      background: var(--fu-accent);
+      width: 0%;
+      transition: width 0.2s ease;
+    }
+
+    /* ----------------------------------------------------------------
+       Page layout
+    ---------------------------------------------------------------- */
+    .fu-page {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 24px 16px 120px;
+    }
+
+    .fu-intro {
+      margin-bottom: 24px;
+    }
+    .fu-intro h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--fu-primary);
+      margin: 0 0 8px;
+    }
+    .fu-intro p {
+      font-size: 0.9rem;
+      color: var(--fu-secondary);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* ----------------------------------------------------------------
+       Section cards
+    ---------------------------------------------------------------- */
+    .fu-section {
+      background: var(--fu-card);
+      border-radius: var(--fu-radius);
+      padding: 24px 20px;
+      margin-bottom: 20px;
+    }
+
+    .fu-section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .fu-section-emoji {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .fu-section-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .fu-section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--fu-accent);
+      margin: 0;
+    }
+    .fu-section-subtitle {
+      font-size: 0.8rem;
+      color: var(--fu-secondary);
+      margin: 0;
+    }
+
+    /* ----------------------------------------------------------------
+       Question wrapper
+    ---------------------------------------------------------------- */
+    .fu-question {
+      margin-bottom: 28px;
+    }
+    .fu-question:last-child {
+      margin-bottom: 0;
+    }
+
+    .fu-label {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--fu-primary);
+      margin-bottom: 12px;
+      display: block;
+      line-height: 1.4;
+    }
+    .fu-required {
+      color: var(--fu-error);
+      margin-left: 2px;
+    }
+
+    /* ----------------------------------------------------------------
+       Star rating
+    ---------------------------------------------------------------- */
+    .star-group {
+      display: flex;
+      gap: 6px;
+    }
+    .star-group input[type="radio"] {
+      display: none;
+    }
+    .star-group label {
+      font-size: 2rem;
+      cursor: pointer;
+      color: var(--fu-star-inactive);
+      transition: color 0.12s ease;
+      user-select: none;
+      line-height: 1;
+    }
+    .star-group label.star-filled {
+      color: var(--fu-star-active);
+    }
+    .star-group label.star-hover {
+      color: var(--fu-star-active);
+      opacity: 0.75;
+    }
+
+    /* ----------------------------------------------------------------
+       Chip buttons
+    ---------------------------------------------------------------- */
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip-group input[type="radio"] {
+      display: none;
+    }
+    .chip-group label {
+      padding: 8px 16px;
+      border: 1px solid var(--fu-border);
+      border-radius: 50px;
+      color: var(--fu-secondary);
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+      line-height: 1.3;
+    }
+    .chip-group label.chip-active {
+      border-color: var(--fu-chip-active-bg);
+      background: var(--fu-chip-active-bg);
+      color: var(--fu-chip-active-color);
+    }
+
+    /* NPS chip — narrower padding */
+    .chip-group.chip-nps label {
+      padding: 8px 10px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      min-width: 36px;
+      text-align: center;
+    }
+
+    .fu-nps-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--fu-secondary);
+      margin-top: 8px;
+    }
+
+    /* ----------------------------------------------------------------
+       Textarea
+    ---------------------------------------------------------------- */
+    .fu-textarea {
+      width: 100%;
+      box-sizing: border-box;
+      background: #252525;
+      border: 1px solid var(--fu-border);
+      border-radius: var(--fu-radius);
+      color: var(--fu-primary);
+      padding: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.5;
+    }
+    .fu-textarea::placeholder {
+      color: var(--fu-secondary);
+      opacity: 0.6;
+    }
+    .fu-textarea:focus {
+      outline: none;
+      border-color: var(--fu-accent);
+    }
+
+    /* ----------------------------------------------------------------
+       Error message (inline validation)
+    ---------------------------------------------------------------- */
+    .fu-error-msg {
+      display: none;
+      background: #3a1a1a;
+      color: #ef9a9a;
+      border: 1px solid #c62828;
+      border-radius: var(--fu-radius);
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+    .fu-error-msg.visible {
+      display: block;
+    }
+
+    /* ----------------------------------------------------------------
+       Sticky submit bar
+    ---------------------------------------------------------------- */
+    .fu-submit-bar {
+      position: sticky;
+      bottom: 0;
+      background: linear-gradient(transparent, #121212 40%);
+      padding: 16px 16px 20px;
+      margin: 0 -16px -120px;
+    }
+    .fu-submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--fu-accent);
+      color: #121212;
+      border: none;
+      border-radius: var(--fu-radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      font-family: 'Inter', sans-serif;
+    }
+    .fu-submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .fu-submit-btn:not(:disabled):hover {
+      opacity: 0.9;
+    }
+
+    /* ----------------------------------------------------------------
+       Success screen
+    ---------------------------------------------------------------- */
+    #followup-success {
+      display: none;
+      text-align: center;
+      padding: 40px 24px;
+      background: var(--fu-success-bg);
+      color: var(--fu-success-color);
+      border: 1px solid #2e7d32;
+      border-radius: var(--fu-radius);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-top: 24px;
+    }
+    #followup-success .fu-success-icon {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 12px;
+    }
+    #followup-success h2 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: var(--fu-success-color);
+    }
+    #followup-success p {
+      margin: 0;
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Progress bar (sticky top, updated on scroll) -->
+  <div id="progress-bar">
+    <div id="progress-fill"></div>
+  </div>
+
   <header>
     <img src="assets/logo-moorent-pm-light.png" alt="Moorent Pm" class="header-logo">
   </header>
 
   <main class="form-container">
     <section class="form-step active" data-step="0">
-      <h2>Come sta andando?</h2>
-      <p>Ci vogliono solo 2 minuti. Il tuo feedback ci aiuta a migliorare il servizio.</p>
 
-      <form id="followup-form" class="followup-form" novalidate>
+      <div class="fu-page">
 
-        <!-- Domanda 1: Soddisfazione generale -->
-        <fieldset class="followup-question">
-          <legend>1. Quanto sei soddisfatto del servizio Moorent Pm? <span style="color:var(--color-error);">*</span></legend>
-          <div class="radio-group" role="radiogroup" aria-label="Soddisfazione generale">
-            <label>
-              <input type="radio" name="soddisfazione" value="1" required>
-              <span>1 — Per niente</span>
-            </label>
-            <label>
-              <input type="radio" name="soddisfazione" value="2">
-              <span>2</span>
-            </label>
-            <label>
-              <input type="radio" name="soddisfazione" value="3">
-              <span>3</span>
-            </label>
-            <label>
-              <input type="radio" name="soddisfazione" value="4">
-              <span>4</span>
-            </label>
-            <label>
-              <input type="radio" name="soddisfazione" value="5">
-              <span>5 — Moltissimo</span>
-            </label>
-          </div>
-        </fieldset>
-
-        <!-- Domanda 2: Comunicazione -->
-        <fieldset class="followup-question">
-          <legend>2. Come valuti la comunicazione del nostro team? <span style="color:var(--color-error);">*</span></legend>
-          <div class="radio-group" role="radiogroup" aria-label="Comunicazione">
-            <label>
-              <input type="radio" name="comunicazione" value="1" required>
-              <span>1 — Scadente</span>
-            </label>
-            <label>
-              <input type="radio" name="comunicazione" value="2">
-              <span>2</span>
-            </label>
-            <label>
-              <input type="radio" name="comunicazione" value="3">
-              <span>3</span>
-            </label>
-            <label>
-              <input type="radio" name="comunicazione" value="4">
-              <span>4</span>
-            </label>
-            <label>
-              <input type="radio" name="comunicazione" value="5">
-              <span>5 — Eccellente</span>
-            </label>
-          </div>
-        </fieldset>
-
-        <!-- Domanda 3: Professionalita -->
-        <fieldset class="followup-question">
-          <legend>3. Come valuti la professionalita del servizio? <span style="color:var(--color-error);">*</span></legend>
-          <div class="radio-group" role="radiogroup" aria-label="Professionalita">
-            <label>
-              <input type="radio" name="professionalita" value="1" required>
-              <span>1 — Scadente</span>
-            </label>
-            <label>
-              <input type="radio" name="professionalita" value="2">
-              <span>2</span>
-            </label>
-            <label>
-              <input type="radio" name="professionalita" value="3">
-              <span>3</span>
-            </label>
-            <label>
-              <input type="radio" name="professionalita" value="4">
-              <span>4</span>
-            </label>
-            <label>
-              <input type="radio" name="professionalita" value="5">
-              <span>5 — Eccellente</span>
-            </label>
-          </div>
-        </fieldset>
-
-        <!-- Domanda 4: Consiglieresti -->
-        <fieldset class="followup-question">
-          <legend>4. Consiglieresti Moorent Pm a un amico o collega? <span style="color:var(--color-error);">*</span></legend>
-          <div class="radio-group" role="radiogroup" aria-label="Consiglieresti">
-            <label>
-              <input type="radio" name="consiglieresti" value="si" required>
-              <span>Si</span>
-            </label>
-            <label>
-              <input type="radio" name="consiglieresti" value="forse">
-              <span>Forse</span>
-            </label>
-            <label>
-              <input type="radio" name="consiglieresti" value="no">
-              <span>No</span>
-            </label>
-          </div>
-        </fieldset>
-
-        <!-- Domanda 5: Nota libera -->
-        <div class="followup-question">
-          <label for="nota-libera" style="font-size:1rem;font-weight:500;color:var(--color-primary);display:block;margin-bottom:12px;">
-            5. C'e altro che vuoi dirci? (facoltativo)
-          </label>
-          <textarea
-            id="nota-libera"
-            name="notaLibera"
-            rows="4"
-            placeholder="Scrivi qui il tuo commento..."></textarea>
+        <!-- Intro -->
+        <div class="fu-intro">
+          <h1>Come sta andando?</h1>
+          <p>Ci vogliono circa 3 minuti. Il tuo feedback ci aiuta a migliorare il servizio.</p>
         </div>
 
-        <button type="submit" id="followup-submit" class="submit-btn">Invia risposta</button>
-      </form>
+        <!-- Inline error message (shown on submit if required fields missing) -->
+        <div class="fu-error-msg" id="fu-validation-error" role="alert">
+          Compila tutti i campi obbligatori (segnati con *) prima di inviare.
+        </div>
 
-      <div id="followup-success" class="status-msg success" style="display:none;">
-        Grazie per il tuo feedback! Le tue risposte ci aiuteranno a migliorare il servizio.
-      </div>
-      <div id="followup-error" class="status-msg error" style="display:none;"></div>
+        <form id="followup-form" novalidate>
+
+          <!-- ==============================================================
+               SEZIONE 1 — IL SERVIZIO
+          ============================================================== -->
+          <div class="fu-section">
+            <div class="fu-section-header">
+              <span class="fu-section-emoji" aria-hidden="true">&#11088;</span>
+              <div class="fu-section-meta">
+                <p class="fu-section-title">Il Servizio</p>
+                <p class="fu-section-subtitle">Quanto sei soddisfatto di ogni aspetto?</p>
+              </div>
+            </div>
+
+            <!-- Q1: Soddisfazione generale -->
+            <div class="fu-question">
+              <label class="fu-label">
+                1. Soddisfazione generale del servizio<span class="fu-required" aria-label="obbligatorio">*</span>
+              </label>
+              <div class="star-group" data-name="soddisfazione" role="radiogroup" aria-label="Soddisfazione generale">
+                <input type="radio" name="soddisfazione" id="s1-1" value="1" required>
+                <label for="s1-1" title="1 stella">&#9733;</label>
+                <input type="radio" name="soddisfazione" id="s1-2" value="2">
+                <label for="s1-2" title="2 stelle">&#9733;</label>
+                <input type="radio" name="soddisfazione" id="s1-3" value="3">
+                <label for="s1-3" title="3 stelle">&#9733;</label>
+                <input type="radio" name="soddisfazione" id="s1-4" value="4">
+                <label for="s1-4" title="4 stelle">&#9733;</label>
+                <input type="radio" name="soddisfazione" id="s1-5" value="5">
+                <label for="s1-5" title="5 stelle">&#9733;</label>
+              </div>
+            </div>
+
+            <!-- Q2: Comunicazione -->
+            <div class="fu-question">
+              <label class="fu-label">
+                2. Comunicazione con il team<span class="fu-required" aria-label="obbligatorio">*</span>
+              </label>
+              <div class="star-group" data-name="comunicazione" role="radiogroup" aria-label="Comunicazione con il team">
+                <input type="radio" name="comunicazione" id="s2-1" value="1" required>
+                <label for="s2-1" title="1 stella">&#9733;</label>
+                <input type="radio" name="comunicazione" id="s2-2" value="2">
+                <label for="s2-2" title="2 stelle">&#9733;</label>
+                <input type="radio" name="comunicazione" id="s2-3" value="3">
+                <label for="s2-3" title="3 stelle">&#9733;</label>
+                <input type="radio" name="comunicazione" id="s2-4" value="4">
+                <label for="s2-4" title="4 stelle">&#9733;</label>
+                <input type="radio" name="comunicazione" id="s2-5" value="5">
+                <label for="s2-5" title="5 stelle">&#9733;</label>
+              </div>
+            </div>
+
+            <!-- Q3: Gestione immobile -->
+            <div class="fu-question">
+              <label class="fu-label">
+                3. Gestione dell&rsquo;immobile (pulizie, manutenzione)<span class="fu-required" aria-label="obbligatorio">*</span>
+              </label>
+              <div class="star-group" data-name="gestioneImmobile" role="radiogroup" aria-label="Gestione dell'immobile">
+                <input type="radio" name="gestioneImmobile" id="s3-1" value="1" required>
+                <label for="s3-1" title="1 stella">&#9733;</label>
+                <input type="radio" name="gestioneImmobile" id="s3-2" value="2">
+                <label for="s3-2" title="2 stelle">&#9733;</label>
+                <input type="radio" name="gestioneImmobile" id="s3-3" value="3">
+                <label for="s3-3" title="3 stelle">&#9733;</label>
+                <input type="radio" name="gestioneImmobile" id="s3-4" value="4">
+                <label for="s3-4" title="4 stelle">&#9733;</label>
+                <input type="radio" name="gestioneImmobile" id="s3-5" value="5">
+                <label for="s3-5" title="5 stelle">&#9733;</label>
+              </div>
+            </div>
+
+            <!-- Q4: Reportistica -->
+            <div class="fu-question">
+              <label class="fu-label">
+                4. Reportistica e trasparenza<span class="fu-required" aria-label="obbligatorio">*</span>
+              </label>
+              <div class="star-group" data-name="reportistica" role="radiogroup" aria-label="Reportistica e trasparenza">
+                <input type="radio" name="reportistica" id="s4-1" value="1" required>
+                <label for="s4-1" title="1 stella">&#9733;</label>
+                <input type="radio" name="reportistica" id="s4-2" value="2">
+                <label for="s4-2" title="2 stelle">&#9733;</label>
+                <input type="radio" name="reportistica" id="s4-3" value="3">
+                <label for="s4-3" title="3 stelle">&#9733;</label>
+                <input type="radio" name="reportistica" id="s4-4" value="4">
+                <label for="s4-4" title="4 stelle">&#9733;</label>
+                <input type="radio" name="reportistica" id="s4-5" value="5">
+                <label for="s4-5" title="5 stelle">&#9733;</label>
+              </div>
+            </div>
+
+            <!-- Q5: Tempi di risposta -->
+            <div class="fu-question">
+              <label class="fu-label">
+                5. Tempi di risposta ai problemi<span class="fu-required" aria-label="obbligatorio">*</span>
+              </label>
+              <div class="star-group" data-name="tempiRisposta" role="radiogroup" aria-label="Tempi di risposta ai problemi">
+                <input type="radio" name="tempiRisposta" id="s5-1" value="1" required>
+                <label for="s5-1" title="1 stella">&#9733;</label>
+                <input type="radio" name="tempiRisposta" id="s5-2" value="2">
+                <label for="s5-2" title="2 stelle">&#9733;</label>
+                <input type="radio" name="tempiRisposta" id="s5-3" value="3">
+                <label for="s5-3" title="3 stelle">&#9733;</label>
+                <input type="radio" name="tempiRisposta" id="s5-4" value="4">
+                <label for="s5-4" title="4 stelle">&#9733;</label>
+                <input type="radio" name="tempiRisposta" id="s5-5" value="5">
+                <label for="s5-5" title="5 stelle">&#9733;</label>
+              </div>
+            </div>
+          </div><!-- /SEZIONE 1 -->
+
+          <!-- ==============================================================
+               SEZIONE 2 — I RISULTATI
+          ============================================================== -->
+          <div class="fu-section">
+            <div class="fu-section-header">
+              <span class="fu-section-emoji" aria-hidden="true">&#128202;</span>
+              <div class="fu-section-meta">
+                <p class="fu-section-title">I Risultati</p>
+                <p class="fu-section-subtitle">Occupazione, guadagni e confronto col passato</p>
+              </div>
+            </div>
+
+            <!-- Q6: Tasso occupazione -->
+            <div class="fu-question">
+              <label class="fu-label">
+                6. Soddisfazione del tasso di occupazione<span class="fu-required" aria-label="obbligatorio">*</span>
+              </label>
+              <div class="star-group" data-name="tassoOccupazione" role="radiogroup" aria-label="Soddisfazione del tasso di occupazione">
+                <input type="radio" name="tassoOccupazione" id="s6-1" value="1" required>
+                <label for="s6-1" title="1 stella">&#9733;</label>
+                <input type="radio" name="tassoOccupazione" id="s6-2" value="2">
+                <label for="s6-2" title="2 stelle">&#9733;</label>
+                <input type="radio" name="tassoOccupazione" id="s6-3" value="3">
+                <label for="s6-3" title="3 stelle">&#9733;</label>
+                <input type="radio" name="tassoOccupazione" id="s6-4" value="4">
+                <label for="s6-4" title="4 stelle">&#9733;</label>
+                <input type="radio" name="tassoOccupazione" id="s6-5" value="5">
+                <label for="s6-5" title="5 stelle">&#9733;</label>
+              </div>
+            </div>
+
+            <!-- Q7: Guadagni vs aspettative -->
+            <div class="fu-question">
+              <label class="fu-label">
+                7. I guadagni rispetto alle tue aspettative<span class="fu-required" aria-label="obbligatorio">*</span>
+              </label>
+              <div class="chip-group" role="radiogroup" aria-label="Guadagni vs aspettative">
+                <label>
+                  <input type="radio" name="guadagni" value="Superano le aspettative">
+                  Superano le aspettative
+                </label>
+                <label>
+                  <input type="radio" name="guadagni" value="In linea con le aspettative">
+                  In linea con le aspettative
+                </label>
+                <label>
+                  <input type="radio" name="guadagni" value="Al di sotto delle aspettative">
+                  Al di sotto delle aspettative
+                </label>
+              </div>
+            </div>
+
+            <!-- Q8: Situazione vs prima -->
+            <div class="fu-question">
+              <label class="fu-label">
+                8. La tua situazione rispetto a prima di Moorent Pm
+              </label>
+              <div class="chip-group" role="radiogroup" aria-label="Situazione vs prima">
+                <label>
+                  <input type="radio" name="situazionePrima" value="Molto migliorata">
+                  Molto migliorata
+                </label>
+                <label>
+                  <input type="radio" name="situazionePrima" value="Migliorata">
+                  Migliorata
+                </label>
+                <label>
+                  <input type="radio" name="situazionePrima" value="Invariata">
+                  Invariata
+                </label>
+                <label>
+                  <input type="radio" name="situazionePrima" value="Peggiorata">
+                  Peggiorata
+                </label>
+              </div>
+            </div>
+          </div><!-- /SEZIONE 2 -->
+
+          <!-- ==============================================================
+               SEZIONE 3 — IMMOBILE & OSPITI
+          ============================================================== -->
+          <div class="fu-section">
+            <div class="fu-section-header">
+              <span class="fu-section-emoji" aria-hidden="true">&#127968;</span>
+              <div class="fu-section-meta">
+                <p class="fu-section-title">Immobile &amp; Ospiti</p>
+                <p class="fu-section-subtitle">Esperienza operativa quotidiana</p>
+              </div>
+            </div>
+
+            <!-- Q9: Problemi ospiti -->
+            <div class="fu-question">
+              <label class="fu-label">
+                9. Con quale frequenza hai avuto problemi con gli ospiti?<span class="fu-required" aria-label="obbligatorio">*</span>
+              </label>
+              <div class="chip-group" role="radiogroup" aria-label="Frequenza problemi ospiti">
+                <label>
+                  <input type="radio" name="problemiOspiti" value="Mai">
+                  Mai
+                </label>
+                <label>
+                  <input type="radio" name="problemiOspiti" value="Raramente">
+                  Raramente
+                </label>
+                <label>
+                  <input type="radio" name="problemiOspiti" value="Qualche volta">
+                  Qualche volta
+                </label>
+                <label>
+                  <input type="radio" name="problemiOspiti" value="Spesso">
+                  Spesso
+                </label>
+              </div>
+            </div>
+
+            <!-- Q10: Immobile pronto -->
+            <div class="fu-question">
+              <label class="fu-label">
+                10. L&rsquo;immobile era sempre pronto per gli ospiti?
+              </label>
+              <div class="chip-group" role="radiogroup" aria-label="Immobile pronto per ospiti">
+                <label>
+                  <input type="radio" name="immobileProto" value="Sempre">
+                  Sempre
+                </label>
+                <label>
+                  <input type="radio" name="immobileProto" value="Quasi sempre">
+                  Quasi sempre
+                </label>
+                <label>
+                  <input type="radio" name="immobileProto" value="Qualche difficolta">
+                  Qualche difficolta
+                </label>
+                <label>
+                  <input type="radio" name="immobileProto" value="No">
+                  No
+                </label>
+              </div>
+            </div>
+          </div><!-- /SEZIONE 3 -->
+
+          <!-- ==============================================================
+               SEZIONE 4 — IL FUTURO
+          ============================================================== -->
+          <div class="fu-section">
+            <div class="fu-section-header">
+              <span class="fu-section-emoji" aria-hidden="true">&#128640;</span>
+              <div class="fu-section-meta">
+                <p class="fu-section-title">Il Futuro</p>
+                <p class="fu-section-subtitle">Intenzioni e consigli</p>
+              </div>
+            </div>
+
+            <!-- Q11: Intenzione contratto -->
+            <div class="fu-question">
+              <label class="fu-label">
+                11. Intendi rinnovare il contratto con Moorent Pm?<span class="fu-required" aria-label="obbligatorio">*</span>
+              </label>
+              <div class="chip-group" role="radiogroup" aria-label="Intenzione rinnovo contratto">
+                <label>
+                  <input type="radio" name="intenzione" value="Assolutamente si">
+                  Assolutamente si
+                </label>
+                <label>
+                  <input type="radio" name="intenzione" value="Probabilmente si">
+                  Probabilmente si
+                </label>
+                <label>
+                  <input type="radio" name="intenzione" value="Non so">
+                  Non so
+                </label>
+                <label>
+                  <input type="radio" name="intenzione" value="Probabilmente no">
+                  Probabilmente no
+                </label>
+              </div>
+            </div>
+
+            <!-- Q12: NPS 0-10 -->
+            <div class="fu-question">
+              <label class="fu-label">
+                12. Consiglieresti Moorent Pm a un amico o collega?<span class="fu-required" aria-label="obbligatorio">*</span>
+              </label>
+              <div class="chip-group chip-nps" id="nps-group" role="radiogroup" aria-label="NPS 0-10">
+                <label>
+                  <input type="radio" name="nps" value="0">0
+                </label>
+                <label>
+                  <input type="radio" name="nps" value="1">1
+                </label>
+                <label>
+                  <input type="radio" name="nps" value="2">2
+                </label>
+                <label>
+                  <input type="radio" name="nps" value="3">3
+                </label>
+                <label>
+                  <input type="radio" name="nps" value="4">4
+                </label>
+                <label>
+                  <input type="radio" name="nps" value="5">5
+                </label>
+                <label>
+                  <input type="radio" name="nps" value="6">6
+                </label>
+                <label>
+                  <input type="radio" name="nps" value="7">7
+                </label>
+                <label>
+                  <input type="radio" name="nps" value="8">8
+                </label>
+                <label>
+                  <input type="radio" name="nps" value="9">9
+                </label>
+                <label>
+                  <input type="radio" name="nps" value="10">10
+                </label>
+              </div>
+              <div class="fu-nps-labels" aria-hidden="true">
+                <span>Per niente</span>
+                <span>Assolutamente si</span>
+              </div>
+            </div>
+
+            <!-- Q13: Cosa piace -->
+            <div class="fu-question">
+              <label class="fu-label" for="cosa-piace">
+                13. Cosa ti piace di piu del servizio?
+              </label>
+              <textarea
+                id="cosa-piace"
+                name="cosaPiace"
+                class="fu-textarea"
+                rows="3"
+                placeholder="Scrivi qui..."></textarea>
+            </div>
+
+            <!-- Q14: Cosa migliorare -->
+            <div class="fu-question">
+              <label class="fu-label" for="cosa-migliorare">
+                14. Cosa potremmo migliorare?
+              </label>
+              <textarea
+                id="cosa-migliorare"
+                name="cosaMigliorare"
+                class="fu-textarea"
+                rows="3"
+                placeholder="Scrivi qui..."></textarea>
+            </div>
+
+            <!-- Q15: Aspettative non soddisfatte -->
+            <div class="fu-question">
+              <label class="fu-label" for="aspettative">
+                15. Ci sono aspettative non soddisfatte?
+              </label>
+              <textarea
+                id="aspettative"
+                name="aspettative"
+                class="fu-textarea"
+                rows="3"
+                placeholder="Scrivi qui..."></textarea>
+            </div>
+          </div><!-- /SEZIONE 4 -->
+
+          <!-- Sticky submit bar -->
+          <div class="fu-submit-bar">
+            <button type="submit" id="followup-submit" class="fu-submit-btn">
+              Invia risposta
+            </button>
+          </div>
+
+        </form><!-- /form -->
+
+        <!-- Success screen (replaces form on success) -->
+        <div id="followup-success">
+          <span class="fu-success-icon" aria-hidden="true">&#10003;</span>
+          <h2>Grazie per il tuo feedback!</h2>
+          <p>Le tue risposte ci aiuteranno a migliorare il servizio per te e per i prossimi clienti.</p>
+        </div>
+
+      </div><!-- /fu-page -->
     </section>
   </main>
 
@@ -166,57 +747,213 @@
 
   <!-- Follow-up form logic -->
   <script>
-(function() {
+(function () {
   'use strict';
 
-  // Legge il parametro ?id= dall'URL
-  var params = new URLSearchParams(window.location.search);
+  // -----------------------------------------------------------------------
+  // Progress bar (scroll-based)
+  // -----------------------------------------------------------------------
+  var progressFill = document.getElementById('progress-fill');
+
+  function updateProgress() {
+    var scrollTop    = window.scrollY || document.documentElement.scrollTop;
+    var docHeight    = document.body.scrollHeight - window.innerHeight;
+    var pct          = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
+    progressFill.style.width = Math.min(pct, 100) + '%';
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // -----------------------------------------------------------------------
+  // Star rating — event delegation
+  // -----------------------------------------------------------------------
+  function getStarLabels(group) {
+    return Array.prototype.slice.call(group.querySelectorAll('label'));
+  }
+
+  function fillStars(labels, upToIndex) {
+    labels.forEach(function (lbl, idx) {
+      lbl.classList.toggle('star-filled', idx <= upToIndex);
+    });
+  }
+
+  function clearHover(labels) {
+    labels.forEach(function (lbl) {
+      lbl.classList.remove('star-hover');
+    });
+  }
+
+  function hoverStars(labels, upToIndex) {
+    labels.forEach(function (lbl, idx) {
+      lbl.classList.toggle('star-hover', idx <= upToIndex);
+    });
+  }
+
+  // Find all star groups and attach events
+  var starGroups = document.querySelectorAll('.star-group');
+  Array.prototype.forEach.call(starGroups, function (group) {
+    var labels = getStarLabels(group);
+
+    labels.forEach(function (lbl, idx) {
+      // Hover: highlight 1..idx
+      lbl.addEventListener('mouseover', function () {
+        clearHover(labels);
+        hoverStars(labels, idx);
+      });
+
+      // Mouse leave group: clear hover, restore selection
+      lbl.addEventListener('mouseleave', function () {
+        clearHover(labels);
+        var input = group.querySelector('input[type="radio"]:checked');
+        if (input) {
+          var selIdx = labels.indexOf(input.nextElementSibling);
+          if (selIdx < 0) {
+            // find by for attribute
+            labels.forEach(function (l, i) {
+              if (l.htmlFor === input.id) { selIdx = i; }
+            });
+          }
+          fillStars(labels, selIdx);
+        } else {
+          labels.forEach(function (l) { l.classList.remove('star-filled'); });
+        }
+      });
+
+      // Click: select radio, fill stars permanently
+      lbl.addEventListener('click', function () {
+        var forId = lbl.htmlFor || lbl.getAttribute('for');
+        var radio = document.getElementById(forId);
+        if (radio) {
+          radio.checked = true;
+        }
+        fillStars(labels, idx);
+        clearHover(labels);
+      });
+    });
+
+    // Group mouseleave to reset hover state
+    group.addEventListener('mouseleave', function () {
+      clearHover(labels);
+    });
+  });
+
+  // -----------------------------------------------------------------------
+  // Chip buttons — click handler
+  // -----------------------------------------------------------------------
+  var chipGroups = document.querySelectorAll('.chip-group');
+  Array.prototype.forEach.call(chipGroups, function (group) {
+    var chipLabels = Array.prototype.slice.call(group.querySelectorAll('label'));
+
+    chipLabels.forEach(function (lbl) {
+      lbl.addEventListener('click', function () {
+        // Remove chip-active from all siblings
+        chipLabels.forEach(function (l) { l.classList.remove('chip-active'); });
+        // Add chip-active to clicked label
+        lbl.classList.add('chip-active');
+      });
+    });
+  });
+
+  // -----------------------------------------------------------------------
+  // Form submit
+  // -----------------------------------------------------------------------
+  var params       = new URLSearchParams(window.location.search);
   var submissionId = params.get('id') || '';
 
-  var form = document.getElementById('followup-form');
-  var successMsg = document.getElementById('followup-success');
-  var errorMsg = document.getElementById('followup-error');
-  var submitBtn = document.getElementById('followup-submit');
+  var form         = document.getElementById('followup-form');
+  var successMsg   = document.getElementById('followup-success');
+  var submitBtn    = document.getElementById('followup-submit');
+  var validationError = document.getElementById('fu-validation-error');
 
-  form.addEventListener('submit', function(e) {
+  // Required field names
+  var requiredFields = [
+    'soddisfazione', 'comunicazione', 'gestioneImmobile',
+    'reportistica', 'tempiRisposta', 'tassoOccupazione',
+    'guadagni', 'problemiOspiti', 'intenzione', 'nps'
+  ];
+
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
 
+    // ---- Client-side required validation ----
     var formData = new FormData(form);
+    var missing  = requiredFields.filter(function (name) {
+      return !formData.get(name);
+    });
+
+    if (missing.length > 0) {
+      validationError.classList.add('visible');
+      validationError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    validationError.classList.remove('visible');
+
+    // ---- Collect all 15 fields ----
     var data = {
-      submissionId:    submissionId,
-      soddisfazione:   formData.get('soddisfazione')   || '',
-      comunicazione:   formData.get('comunicazione')   || '',
-      professionalita: formData.get('professionalita') || '',
-      consiglieresti:  formData.get('consiglieresti')  || '',
-      notaLibera:      formData.get('notaLibera')      || ''
+      submissionId:     submissionId,
+      soddisfazione:    formData.get('soddisfazione')    || '',
+      comunicazione:    formData.get('comunicazione')    || '',
+      gestioneImmobile: formData.get('gestioneImmobile') || '',
+      reportistica:     formData.get('reportistica')     || '',
+      tempiRisposta:    formData.get('tempiRisposta')    || '',
+      tassoOccupazione: formData.get('tassoOccupazione') || '',
+      guadagni:         formData.get('guadagni')         || '',
+      situazionePrima:  formData.get('situazionePrima')  || '',
+      problemiOspiti:   formData.get('problemiOspiti')   || '',
+      immobileProto:    formData.get('immobileProto')    || '',
+      intenzione:       formData.get('intenzione')       || '',
+      nps:              formData.get('nps')              || '',
+      cosaPiace:        formData.get('cosaPiace')        || '',
+      cosaMigliorare:   formData.get('cosaMigliorare')   || '',
+      aspettative:      formData.get('aspettative')      || ''
     };
 
-    submitBtn.disabled = true;
+    // ---- Disable button during request ----
+    submitBtn.disabled    = true;
     submitBtn.textContent = 'Invio in corso...';
 
-    fetch(window.CONFIG.appsScriptUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ action: 'followup', data: data })
-    })
-      .then(function(res) { return res.json(); })
-      .then(function(result) {
-        if (result.success) {
-          form.style.display = 'none';
-          successMsg.style.display = 'block';
-        } else {
-          errorMsg.textContent = 'Errore durante l\'invio. Riprova piu tardi.';
-          errorMsg.style.display = 'block';
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Invia risposta';
-        }
-      })
-      .catch(function() {
-        errorMsg.textContent = 'Errore di rete. Controlla la connessione e riprova.';
-        errorMsg.style.display = 'block';
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Invia risposta';
-      });
+    // ---- Retry wrapper (3 attempts, exponential back-off) ----
+    var attempt    = 0;
+    var delays     = [0, 1000, 2000];
+
+    function doFetch() {
+      setTimeout(function () {
+        fetch(window.CONFIG.appsScriptUrl, {
+          method:  'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body:    JSON.stringify({ action: 'followup', data: data })
+        })
+          .then(function (res) { return res.json(); })
+          .then(function (result) {
+            if (result.success) {
+              form.style.display      = 'none';
+              successMsg.style.display = 'block';
+              updateProgress();
+            } else {
+              handleError('Errore durante l\'invio. Riprova piu tardi.');
+            }
+          })
+          .catch(function () {
+            attempt++;
+            if (attempt < delays.length) {
+              doFetch();
+            } else {
+              handleError('Errore di rete. Controlla la connessione e riprova.');
+            }
+          });
+      }, delays[attempt] || 0);
+    }
+
+    function handleError(msg) {
+      validationError.textContent = msg;
+      validationError.classList.add('visible');
+      submitBtn.disabled    = false;
+      submitBtn.textContent = 'Invia risposta';
+    }
+
+    doFetch();
   });
 
 }());
