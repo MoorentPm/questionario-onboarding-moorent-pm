@@ -180,6 +180,53 @@
       }
     }
 
+    // Collect amenities from step3
+    var step3Amenities = formData.step3 || {};
+    var amenityLabels = {
+      'amenity-wifi': 'Wi-Fi',
+      'amenity-tv': 'TV',
+      'amenity-scrivania': 'Scrivania / Area lavoro',
+      'amenity-aria-condizionata': 'Aria condizionata',
+      'amenity-riscaldamento': 'Riscaldamento',
+      'amenity-cucina': 'Cucina attrezzata',
+      'amenity-frigorifero': 'Frigorifero',
+      'amenity-microonde': 'Microonde',
+      'amenity-forno': 'Forno',
+      'amenity-lavastoviglie': 'Lavastoviglie',
+      'amenity-caffettiera': 'Caffettiera / Bollitore',
+      'amenity-stoviglie': 'Stoviglie e posate',
+      'amenity-lavatrice': 'Lavatrice',
+      'amenity-asciugatrice': 'Asciugatrice',
+      'amenity-ferro-stiro': 'Ferro da stiro',
+      'amenity-asciugacapelli': 'Asciugacapelli',
+      'amenity-prodotti-doccia': 'Prodotti doccia',
+      'amenity-biancheria': 'Biancheria fornita',
+      'amenity-vasca': 'Vasca da bagno',
+      'amenity-bidet': 'Bidet',
+      'amenity-self-checkin': 'Check-in autonomo',
+      'amenity-ascensore': 'Ascensore',
+      'amenity-parcheggio': 'Parcheggio gratuito',
+      'amenity-balcone': 'Balcone / Terrazza',
+      'amenity-giardino': 'Giardino',
+      'amenity-rilevatore-fumo': 'Rilevatore di fumo',
+      'amenity-rilevatore-co': 'Rilevatore di CO',
+      'amenity-estintore': 'Estintore',
+      'amenity-kit-ps': 'Kit pronto soccorso',
+      'amenity-piscina': 'Piscina',
+      'amenity-jacuzzi': 'Vasca idromassaggio',
+      'amenity-barbecue': 'Barbecue'
+    };
+    var selectedAmenities = [];
+    var amenityKey;
+    for (amenityKey in amenityLabels) {
+      if (amenityLabels.hasOwnProperty(amenityKey) && step3Amenities[amenityKey] === true) {
+        selectedAmenities.push(amenityLabels[amenityKey]);
+      }
+    }
+    if (selectedAmenities.length > 0) {
+      flat.dotazioni = selectedAmenities.join(', ');
+    }
+
     // Build address strings from components
     var step1 = formData.step1 || {};
     var step2 = formData.step2 || {};
@@ -221,16 +268,16 @@
       return [];
     }
 
-    var step3 = FormState.getStepData(3);
+    var step4 = FormState.getStepData(4);
     var files = [];
     var targets = ['fronte', 'retro'];
     var i;
 
     for (i = 0; i < targets.length; i++) {
       var target = targets[i];
-      var dataUrl = step3['documento-' + target];
-      var filename = step3['documento-' + target + '-filename'];
-      var mimeType = step3['documento-' + target + '-type'];
+      var dataUrl = step4['documento-' + target];
+      var filename = step4['documento-' + target + '-filename'];
+      var mimeType = step4['documento-' + target + '-type'];
 
       if (dataUrl && filename && mimeType) {
         files.push({

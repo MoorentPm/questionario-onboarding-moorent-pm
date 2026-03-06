@@ -165,10 +165,10 @@
 
       // Store in FormState (step index 3)
       if (typeof FormState !== 'undefined' && FormState.setFieldValue) {
-        FormState.setFieldValue(3, 'documento-' + target, dataUrl);
-        FormState.setFieldValue(3, 'documento-' + target + '-filename', file.name);
-        FormState.setFieldValue(3, 'documento-' + target + '-size', file.size);
-        FormState.setFieldValue(3, 'documento-' + target + '-type', file.type);
+        FormState.setFieldValue(4, 'documento-' + target, dataUrl);
+        FormState.setFieldValue(4, 'documento-' + target + '-filename', file.name);
+        FormState.setFieldValue(4, 'documento-' + target + '-size', file.size);
+        FormState.setFieldValue(4, 'documento-' + target + '-type', file.type);
       }
 
       // Show preview
@@ -195,10 +195,10 @@
 
     // Clear FormState
     if (typeof FormState !== 'undefined' && FormState.setFieldValue) {
-      FormState.setFieldValue(3, 'documento-' + target, null);
-      FormState.setFieldValue(3, 'documento-' + target + '-filename', null);
-      FormState.setFieldValue(3, 'documento-' + target + '-size', null);
-      FormState.setFieldValue(3, 'documento-' + target + '-type', null);
+      FormState.setFieldValue(4, 'documento-' + target, null);
+      FormState.setFieldValue(4, 'documento-' + target + '-filename', null);
+      FormState.setFieldValue(4, 'documento-' + target + '-size', null);
+      FormState.setFieldValue(4, 'documento-' + target + '-type', null);
     }
 
     // Reset UI
@@ -232,7 +232,7 @@
       return;
     }
 
-    var step3Data = FormState.getStepData(3);
+    var step3Data = FormState.getStepData(4);
     var i;
 
     for (i = 0; i < TARGETS.length; i++) {

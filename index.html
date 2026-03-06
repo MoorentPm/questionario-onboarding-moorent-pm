@@ -15,8 +15,8 @@
   <header>
     <img src="assets/logo-moorent-pm-light.png" alt="Moorent Pm" class="header-logo">
     <div class="progress-container">
-      <p id="progress-text" aria-live="polite">Step 1 di 7 — Benvenuto</p>
-      <progress id="form-progress" max="100" value="14" aria-label="Progresso del questionario"></progress>
+      <p id="progress-text" aria-live="polite">Step 1 di 8 — Benvenuto</p>
+      <progress id="form-progress" max="100" value="12" aria-label="Progresso del questionario"></progress>
     </div>
   </header>
 
@@ -316,6 +316,147 @@
     </section>
 
     <section class="form-step" data-step="3">
+      <h2>Dotazioni dell'Immobile</h2>
+      <p>Seleziona tutti i servizi presenti nel tuo immobile. Li useremo per creare l'annuncio su Airbnb.</p>
+
+      <div class="field-section">
+        <h3 class="section-title">Connettività & Intrattenimento</h3>
+        <div class="chip-group">
+          <input type="checkbox" id="amenity-wifi" name="amenity-wifi" class="chip-input">
+          <label for="amenity-wifi" class="chip-label">Wi-Fi</label>
+
+          <input type="checkbox" id="amenity-tv" name="amenity-tv" class="chip-input">
+          <label for="amenity-tv" class="chip-label">TV</label>
+
+          <input type="checkbox" id="amenity-scrivania" name="amenity-scrivania" class="chip-input">
+          <label for="amenity-scrivania" class="chip-label">Scrivania / Area lavoro</label>
+        </div>
+      </div>
+
+      <div class="field-section">
+        <h3 class="section-title">Comfort</h3>
+        <div class="chip-group">
+          <input type="checkbox" id="amenity-aria-condizionata" name="amenity-aria-condizionata" class="chip-input">
+          <label for="amenity-aria-condizionata" class="chip-label">Aria condizionata</label>
+
+          <input type="checkbox" id="amenity-riscaldamento" name="amenity-riscaldamento" class="chip-input">
+          <label for="amenity-riscaldamento" class="chip-label">Riscaldamento</label>
+        </div>
+      </div>
+
+      <div class="field-section">
+        <h3 class="section-title">Cucina</h3>
+        <div class="chip-group">
+          <input type="checkbox" id="amenity-cucina" name="amenity-cucina" class="chip-input">
+          <label for="amenity-cucina" class="chip-label">Cucina attrezzata</label>
+
+          <input type="checkbox" id="amenity-frigorifero" name="amenity-frigorifero" class="chip-input">
+          <label for="amenity-frigorifero" class="chip-label">Frigorifero</label>
+
+          <input type="checkbox" id="amenity-microonde" name="amenity-microonde" class="chip-input">
+          <label for="amenity-microonde" class="chip-label">Microonde</label>
+
+          <input type="checkbox" id="amenity-forno" name="amenity-forno" class="chip-input">
+          <label for="amenity-forno" class="chip-label">Forno</label>
+
+          <input type="checkbox" id="amenity-lavastoviglie" name="amenity-lavastoviglie" class="chip-input">
+          <label for="amenity-lavastoviglie" class="chip-label">Lavastoviglie</label>
+
+          <input type="checkbox" id="amenity-caffettiera" name="amenity-caffettiera" class="chip-input">
+          <label for="amenity-caffettiera" class="chip-label">Caffettiera / Bollitore</label>
+
+          <input type="checkbox" id="amenity-stoviglie" name="amenity-stoviglie" class="chip-input">
+          <label for="amenity-stoviglie" class="chip-label">Stoviglie e posate</label>
+        </div>
+      </div>
+
+      <div class="field-section">
+        <h3 class="section-title">Lavanderia</h3>
+        <div class="chip-group">
+          <input type="checkbox" id="amenity-lavatrice" name="amenity-lavatrice" class="chip-input">
+          <label for="amenity-lavatrice" class="chip-label">Lavatrice</label>
+
+          <input type="checkbox" id="amenity-asciugatrice" name="amenity-asciugatrice" class="chip-input">
+          <label for="amenity-asciugatrice" class="chip-label">Asciugatrice</label>
+
+          <input type="checkbox" id="amenity-ferro-stiro" name="amenity-ferro-stiro" class="chip-input">
+          <label for="amenity-ferro-stiro" class="chip-label">Ferro da stiro</label>
+        </div>
+      </div>
+
+      <div class="field-section">
+        <h3 class="section-title">Bagno</h3>
+        <div class="chip-group">
+          <input type="checkbox" id="amenity-asciugacapelli" name="amenity-asciugacapelli" class="chip-input">
+          <label for="amenity-asciugacapelli" class="chip-label">Asciugacapelli</label>
+
+          <input type="checkbox" id="amenity-prodotti-doccia" name="amenity-prodotti-doccia" class="chip-input">
+          <label for="amenity-prodotti-doccia" class="chip-label">Prodotti doccia</label>
+
+          <input type="checkbox" id="amenity-biancheria" name="amenity-biancheria" class="chip-input">
+          <label for="amenity-biancheria" class="chip-label">Biancheria fornita</label>
+
+          <input type="checkbox" id="amenity-vasca" name="amenity-vasca" class="chip-input">
+          <label for="amenity-vasca" class="chip-label">Vasca da bagno</label>
+
+          <input type="checkbox" id="amenity-bidet" name="amenity-bidet" class="chip-input">
+          <label for="amenity-bidet" class="chip-label">Bidet</label>
+        </div>
+      </div>
+
+      <div class="field-section">
+        <h3 class="section-title">Accesso e Spazi</h3>
+        <div class="chip-group">
+          <input type="checkbox" id="amenity-self-checkin" name="amenity-self-checkin" class="chip-input">
+          <label for="amenity-self-checkin" class="chip-label">Check-in autonomo</label>
+
+          <input type="checkbox" id="amenity-ascensore" name="amenity-ascensore" class="chip-input">
+          <label for="amenity-ascensore" class="chip-label">Ascensore</label>
+
+          <input type="checkbox" id="amenity-parcheggio" name="amenity-parcheggio" class="chip-input">
+          <label for="amenity-parcheggio" class="chip-label">Parcheggio gratuito</label>
+
+          <input type="checkbox" id="amenity-balcone" name="amenity-balcone" class="chip-input">
+          <label for="amenity-balcone" class="chip-label">Balcone / Terrazza</label>
+
+          <input type="checkbox" id="amenity-giardino" name="amenity-giardino" class="chip-input">
+          <label for="amenity-giardino" class="chip-label">Giardino</label>
+        </div>
+      </div>
+
+      <div class="field-section">
+        <h3 class="section-title">Sicurezza</h3>
+        <div class="chip-group">
+          <input type="checkbox" id="amenity-rilevatore-fumo" name="amenity-rilevatore-fumo" class="chip-input">
+          <label for="amenity-rilevatore-fumo" class="chip-label">Rilevatore di fumo</label>
+
+          <input type="checkbox" id="amenity-rilevatore-co" name="amenity-rilevatore-co" class="chip-input">
+          <label for="amenity-rilevatore-co" class="chip-label">Rilevatore di CO</label>
+
+          <input type="checkbox" id="amenity-estintore" name="amenity-estintore" class="chip-input">
+          <label for="amenity-estintore" class="chip-label">Estintore</label>
+
+          <input type="checkbox" id="amenity-kit-ps" name="amenity-kit-ps" class="chip-input">
+          <label for="amenity-kit-ps" class="chip-label">Kit pronto soccorso</label>
+        </div>
+      </div>
+
+      <div class="field-section">
+        <h3 class="section-title">Extra</h3>
+        <div class="chip-group">
+          <input type="checkbox" id="amenity-piscina" name="amenity-piscina" class="chip-input">
+          <label for="amenity-piscina" class="chip-label">Piscina</label>
+
+          <input type="checkbox" id="amenity-jacuzzi" name="amenity-jacuzzi" class="chip-input">
+          <label for="amenity-jacuzzi" class="chip-label">Vasca idromassaggio</label>
+
+          <input type="checkbox" id="amenity-barbecue" name="amenity-barbecue" class="chip-input">
+          <label for="amenity-barbecue" class="chip-label">Barbecue</label>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-step" data-step="4">
       <h2>Documenti</h2>
       <p class="doc-note">Accettiamo Carta d'Identita o Passaporto</p>
 
@@ -370,7 +511,7 @@
       </div>
     </section>
 
-    <section class="form-step" data-step="4">
+    <section class="form-step" data-step="5">
       <h2>Come ci hai conosciuto?</h2>
 
       <div class="field-section">
@@ -404,7 +545,7 @@
       </div>
     </section>
 
-    <section class="form-step" data-step="5">
+    <section class="form-step" data-step="6">
       <h2>Riepilogo</h2>
       <p>Controlla i tuoi dati prima di procedere. Puoi tornare indietro per modificare qualsiasi informazione.</p>
 
@@ -466,8 +607,21 @@
 
       <div class="review-section">
         <div class="review-header">
+          <h3>Dotazioni</h3>
+          <button type="button" class="btn-edit" data-edit-step="3" aria-label="Modifica dotazioni">
+            Modifica
+          </button>
+        </div>
+        <dl class="review-data">
+          <dt>Servizi selezionati</dt>
+          <dd id="review-dotazioni">—</dd>
+        </dl>
+      </div>
+
+      <div class="review-section">
+        <div class="review-header">
           <h3>Documenti</h3>
-          <button type="button" class="btn-edit" data-edit-step="3" aria-label="Modifica documenti">
+          <button type="button" class="btn-edit" data-edit-step="4" aria-label="Modifica documenti">
             Modifica
           </button>
         </div>
@@ -487,7 +641,7 @@
       <div class="review-section">
         <div class="review-header">
           <h3>Tracking</h3>
-          <button type="button" class="btn-edit" data-edit-step="4" aria-label="Modifica tracking">
+          <button type="button" class="btn-edit" data-edit-step="5" aria-label="Modifica tracking">
             Modifica
           </button>
         </div>
@@ -501,7 +655,7 @@
       </div>
     </section>
 
-    <section class="form-step" data-step="6">
+    <section class="form-step" data-step="7">
       <h2>Privacy & Invio</h2>
       <p>Ultimo passo: leggi l'informativa privacy e conferma l'invio del questionario.</p>
 

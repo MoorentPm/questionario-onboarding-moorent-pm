@@ -5,12 +5,13 @@
 (function () {
   'use strict';
 
-  var TOTAL_STEPS = 7;
+  var TOTAL_STEPS = 8;
 
   var STEP_NAMES = [
     'Benvenuto',
     'Dati Personali',
     'Dati Immobile',
+    'Dotazioni',
     'Documenti',
     'Tracking & Note',
     'Riepilogo',
@@ -33,13 +34,13 @@
       targetStep.classList.add('active');
     }
 
-    // Refresh review data every time Riepilogo (step 5) is shown
-    if (stepIndex === 5 && typeof StepReview !== 'undefined' && StepReview.populate) {
+    // Refresh review data every time Riepilogo (step 6) is shown
+    if (stepIndex === 6 && typeof StepReview !== 'undefined' && StepReview.populate) {
       StepReview.populate();
     }
 
-    // Restore document uploads when returning to Step 4 (data-step 3)
-    if (stepIndex === 3 && typeof StepDocumenti !== 'undefined' && StepDocumenti.restoreUploads) {
+    // Restore document uploads when returning to Step 4 (data-step 4)
+    if (stepIndex === 4 && typeof StepDocumenti !== 'undefined' && StepDocumenti.restoreUploads) {
       StepDocumenti.restoreUploads();
     }
 
@@ -61,7 +62,7 @@
       progressEl.value = percentage;
     }
     if (progressText) {
-      progressText.textContent = 'Step ' + (stepIndex + 1) + ' di 7 — ' + STEP_NAMES[stepIndex];
+      progressText.textContent = 'Step ' + (stepIndex + 1) + ' di ' + TOTAL_STEPS + ' — ' + STEP_NAMES[stepIndex];
     }
   }
 
@@ -85,7 +86,7 @@
       // Remove btn-submit class before conditionally re-adding
       nextBtn.classList.remove('btn-submit');
 
-      if (stepIndex === 6) {
+      if (stepIndex === 7) {
         nextBtn.style.display = 'none';
       } else {
         nextBtn.style.display = '';
@@ -103,12 +104,12 @@
 
     // Step 0 (welcome) and Step 5 (riepilogo) have no validation
     // Step 6 is submission -- handled in Phase 6
-    if (currentStep >= 6) {
+    if (currentStep >= 7) {
       return;
     }
 
     // Validate current step before advancing (skip step 0 -- welcome page)
-    if (currentStep > 0 && currentStep < 6) {
+    if (currentStep > 0 && currentStep < 7) {
       // Check if FormValidation is available (Phase 3 module)
       if (typeof FormValidation !== 'undefined' && FormValidation.showStepErrors) {
         var isValid = FormValidation.showStepErrors(currentStep);

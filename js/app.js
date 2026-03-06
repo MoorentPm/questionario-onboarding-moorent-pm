@@ -91,7 +91,7 @@
     if (sessionExists) {
       var savedStep = FormState.getCurrentStep();
       // Validate saved step is in range
-      if (savedStep >= 0 && savedStep < 7) {
+      if (savedStep >= 0 && savedStep < 8) {
         startStep = savedStep;
       } else {
         startStep = 0;
